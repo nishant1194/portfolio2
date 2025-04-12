@@ -4,12 +4,26 @@ import { pipeline } from "@xenova/transformers";
 import FAQ from "../model/Faq.js";
 
 const router = express.Router();
+
 // Load NLP Model
 let model;
-async function loadModel() {
-  model = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2");
-}
-loadModel();
+const modelReady = (async () => {
+  try {
+    model = await pipeline("feature-extraction", "Xenova/all-MiniLM-L6-v2");
+    console.log("NLP model loaded");
+  } catch (err) {
+    console.error("Failed to load model:", err);
+  }
+})();
+
+// Middleware to ensure model is ready
+router.use(async (req, res, next) => {
+  await modelReady;
+  if (!model) {
+    return res.status(503).json({ error: "NLP model not loaded yet." });
+  }
+  next();
+});
 
 const genAI = new GoogleGenerativeAI("AIzaSyDeGzP4YMJ-NjTcoxglTx4Ynv7Y5M_808E");
 const genmodel = genAI.getGenerativeModel({ model: "gemini-pro" });
@@ -19,16 +33,15 @@ const getNeutralResponseFromAi = async (answer) => {
     const result = await genmodel.generateContent(
       `
       I am providing you with my resume. Based on it, please answer frequently asked questions about me in a concise, professional, and confident tone. These may include questions about my education, technical skills, notable projects, leadership roles, achievements, relevant coursework, and overall experience. Your responses should be suitable for use in interviews, networking conversations, or professional summaries like LinkedIn or GitHub bios. Here is my resume: My name is Nishant, currently pursuing a B.Tech at IIT Ropar (2022–2026). I have strong technical proficiency in JavaScript, Java, Python, and TypeScript, and I’m experienced in full-stack development using the MERN stack, Redux Toolkit, Next.js, and Tailwind CSS. I also work with React Native, Zustand, and Expo for mobile app development. My key projects include an AI-integrated real-time chat app, a full-stack LeetCode clone with chatbot, a cross-platform URL shortener with QR tools, and a society website built for RSF-EE at IIT Ropar. I serve as the Web Development Head for Advitiya’25, our institute’s technical fest, and have held various positions like event coordinator and welfare committee member. I’ve completed coursework in data structures, control systems, linear algebra, and digital circuits. I was recognized as Volunteer of the Month at IIT Ropar’s Animal Welfare Committee and ranked in the top 1% in JEE Advanced. My GitHub is github.com/nishant1194, LinkedIn is linkedin.com/in/nishant-428476256, and my portfolio is portfolio. Use this information to help me answer FAQs or generate professional summaries. Now answer this faq about me
-     ` + answer
+      ` + answer
     );
-    const text = result.response.text();
-    return text;
+    return result.response.text();
   } catch (error) {
     console.error("Error generating content:", error);
   }
 };
-// Helper function to calculate cosine similarity
 
+// Helper function to calculate cosine similarity
 function cosineSimilarity(vec1, vec2) {
   const dotProduct = vec1.reduce((sum, v, i) => sum + v * vec2[i], 0);
   const norm1 = Math.sqrt(vec1.reduce((sum, v) => sum + v * v, 0));
@@ -36,7 +49,7 @@ function cosineSimilarity(vec1, vec2) {
   return dotProduct / (norm1 * norm2);
 }
 
-// API to Add FAQ
+// Add FAQ
 router.post("/faq", async (req, res) => {
   try {
     const { question, answer, id } = req.body;
@@ -44,41 +57,41 @@ router.post("/faq", async (req, res) => {
       pooling: "mean",
       normalize: true,
     });
+
     const newFAQ = new FAQ({
       id,
       question,
       answer,
       embedding: embedding.tolist()[0],
     });
+
     await newFAQ.save();
-    console.log(newFAQ);
     res.json({ message: "FAQ added successfully!" });
   } catch (error) {
-    console.log(error);
+    console.error("Error adding FAQ:", error);
+    res.status(500).json({ message: "Failed to add FAQ" });
   }
 });
 
-// API to Update FAQ
+// Update FAQ
 router.put("/faq/:id", async (req, res) => {
   try {
     const { id } = req.params;
     const { question, answer } = req.body;
 
-    // Generate embedding for the new question
     const embedding = await model(question, {
       pooling: "mean",
       normalize: true,
     });
 
-    // Update the FAQ in the database
     const updatedFAQ = await FAQ.findByIdAndUpdate(
       id,
       {
         question,
         answer,
-        embedding: embedding.tolist()[0], // Ensure this is correctly converted
+        embedding: embedding.tolist()[0],
       },
-      { new: true } // Return the updated document
+      { new: true }
     );
 
     if (!updatedFAQ) {
@@ -92,25 +105,24 @@ router.put("/faq/:id", async (req, res) => {
   }
 });
 
-// API to Delete FAQ
+// Delete FAQ
 router.delete("/faq/:id", async (req, res) => {
   try {
     const { id } = req.params;
-    // delete the FAQ in the database
     const deleteFAQ = await FAQ.findByIdAndDelete(id);
 
     if (!deleteFAQ) {
       return res.status(404).json({ message: "FAQ not found" });
     }
 
-    res.json({ message: "FAQ deleteFAQ successfully!", deleteFAQ });
+    res.json({ message: "FAQ deleted successfully!", deleteFAQ });
   } catch (error) {
-    console.error("Error updating FAQ:", error);
+    console.error("Error deleting FAQ:", error);
     res.status(500).json({ message: "Internal Server Error" });
   }
 });
 
-// API to Add FAQ in bulk array
+// Add FAQs in bulk
 router.post("/faq-more", async (req, res) => {
   try {
     const { faqs } = req.body;
@@ -124,7 +136,7 @@ router.post("/faq-more", async (req, res) => {
     for (let faq of faqs) {
       if (!faq.question || !faq.answer) {
         console.warn("Skipping invalid FAQ:", faq);
-        continue; // Skip invalid data
+        continue;
       }
 
       const embedding = await model(faq.question, {
@@ -140,7 +152,6 @@ router.post("/faq-more", async (req, res) => {
       });
 
       await newFAQ.save();
-      console.log("Saved FAQ:", newFAQ);
     }
 
     res.json({ message: "FAQs added successfully!" });
@@ -150,40 +161,48 @@ router.post("/faq-more", async (req, res) => {
   }
 });
 
-// API to Get All FAQs
+// Get All FAQs
 router.get("/faq", async (req, res) => {
-  const faqs = await FAQ.find({});
-  res.json(faqs);
+  try {
+    const faqs = await FAQ.find({});
+    res.json(faqs);
+  } catch (err) {
+    res.status(500).json({ message: "Failed to retrieve FAQs." });
+  }
 });
 
-// API for Chatbot
+// Chatbot Query
 router.post("/chat", async (req, res) => {
-  const { query } = req.body;
-  const userEmbedding = await model(query, {
-    pooling: "mean",
-    normalize: true,
-  });
-
-  const faqs = await FAQ.find({});
-  let bestMatch = null;
-  let bestScore = -1;
-
-  faqs.forEach((faq) => {
-    const score = cosineSimilarity(userEmbedding.tolist()[0], faq.embedding);
-    if (score > bestScore) {
-      bestScore = score;
-      bestMatch = faq;
-    }
-  });
-
-  if (bestMatch && bestScore > 0.5) {
-    console.log(bestMatch.answer);
-    res.json({ answer: bestMatch.answer, confidence: bestScore.toFixed(2) });
-  } else {
-    res.json({
-       answer: "I'm not sure about this. Can you provide more details?",
-      confidence: bestScore.toFixed(2),
+  try {
+    const { query } = req.body;
+    const userEmbedding = await model(query, {
+      pooling: "mean",
+      normalize: true,
     });
+
+    const faqs = await FAQ.find({});
+    let bestMatch = null;
+    let bestScore = -1;
+
+    faqs.forEach((faq) => {
+      const score = cosineSimilarity(userEmbedding.tolist()[0], faq.embedding);
+      if (score > bestScore) {
+        bestScore = score;
+        bestMatch = faq;
+      }
+    });
+
+    if (bestMatch && bestScore > 0.5) {
+      res.json({ answer: bestMatch.answer, confidence: bestScore.toFixed(2) });
+    } else {
+      res.json({
+        answer: "I'm not sure about this. Can you provide more details?",
+        confidence: bestScore.toFixed(2),
+      });
+    }
+  } catch (error) {
+    console.error("Error during chatbot query:", error);
+    res.status(500).json({ message: "Internal Server Error" });
   }
 });
 

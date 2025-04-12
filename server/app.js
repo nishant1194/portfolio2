@@ -7,14 +7,12 @@ import FAQRoute from "./routes/Faq.js";
 const app = express();
 
 app.use(cors({
-    origin: '*',
+    origin: "https://portfolio-fe-blond.vercel.app",  // frontend
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-  }));
-  
-  // Handle OPTIONS preflight requests
-  app.options('*', cors());
+}));
+
   
   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
