@@ -4,7 +4,7 @@ Hi there! 👋 Welcome to my **personal portfolio** built with **React + Vite**.
 
 Feel free to explore my portfolio and interact with the chatbot to get to know more about me!
 
-Live Link: 
+Live Link: [https://portfolio-fe-blond.vercel.app/](https://portfolio-fe-blond.vercel.app/)
 
 ---
 
