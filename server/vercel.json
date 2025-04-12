@@ -1,6 +1,6 @@
 {
     "version": 2,
-    "name": "Chatbot Application",
+    "name": "portfoli with Chatbot",
     "builds": [
        { "src": "server.js", "use": "@vercel/node" }
     ],
