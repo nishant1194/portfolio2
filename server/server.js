@@ -1,33 +1,9 @@
-import express from "express";
-import mongoose from "mongoose";
-import cors from "cors";
-import bodyParser from "body-parser";
+import http from "http"
+import app from './app.js'
+const port = process.env.PORT || 6004 ;
 
-import FAQRoute from "./routes/Faq.js";
-const app = express();
-const PORT = 6004;
+const server = http.createServer(app) ;
 
-app.use(cors());
-app.use(bodyParser.json());
-
-const connectDB = async() =>{
-    try {
-     await mongoose.connect("mongodb+srv://nishantkumar32435:porfoliochatbot@cluster0.ds41xqq.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0")
-      console.log("connected")
-        
-    } catch (error) {
-        console.log(error)
-    }
-} 
-connectDB();
-app.use('/chat-bot' ,FAQRoute )
-app.use('*' , (req,res)=>{
-    res.json({status:"ok"});
+server.listen(port ,()=>{
+    console.log("server is running on port " + port) ;
 })
-
-
-// Start Server
-app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
-
-
-// justBaatAi
