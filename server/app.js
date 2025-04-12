@@ -5,16 +5,21 @@ import bodyParser from "body-parser";
 
 import FAQRoute from "./routes/Faq.js";
 const app = express();
-
 app.use(cors({
-    origin: "https://portfolio-fe-blond.vercel.app",  // frontend
+    origin: [
+        "https://portfolio-fe-blond.vercel.app",
+        "http://localhost:5173",
+    ],
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-    allowedHeaders: ['Content-Type', 'Authorization'],
+    allowedHeaders: ['Content-Type', 'Authorization']
 }));
 
-  
-  app.use(express.urlencoded({ extended: false }));
+// Optional, but good for handling preflight requests manually
+app.options('*', cors());
+
+
+   app.use(express.urlencoded({ extended: false }));
   app.use(express.json());
   app.use(bodyParser.json());
 const connectDB = async() =>{
