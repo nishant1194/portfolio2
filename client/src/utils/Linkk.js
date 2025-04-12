@@ -1,2 +1,2 @@
-const Linkk = 'http://localhost:6004'
+const Linkk = 'https://portfolio2-ten-mocha.vercel.app'
 export default Linkk
