@@ -196,7 +196,7 @@ router.post("/chat", async (req, res) => {
       res.json({ answer: bestMatch.answer, confidence: bestScore.toFixed(2) });
     } else {
       res.json({
-        answer: "I'm not sure about this. Can you provide more details?",
+        answer: "I can only respond to questions related to my portfolio. Feel free to ask about my skills, projects, or experiences—I'd be glad to help!",
         confidence: bestScore.toFixed(2),
       });
     }
