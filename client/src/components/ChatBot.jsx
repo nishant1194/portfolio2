@@ -44,7 +44,7 @@ const Chatbot = () => {
       animate={{ opacity: 1, scale: 1, y: 0 }}
       exit={{ opacity: 0, scale: 0.8, y: 50 }}
       transition={{ duration: 0.2, ease: "easeOut" }}
-      className="bg-white w-[400px] h-[500px] rounded-2xl mb-5 shadow-lg"
+      className="bg-white w-[300px] h-[500px] sm:w-[400px] sm:h-[500px] rounded-2xl mb-5 shadow-lg"
     >
 
             <div className="flex bg-[#624fb2] text-white text-xl p-3 rounded-tl-2xl rounded-tr-2xl justify-between items-center">
