@@ -92,6 +92,9 @@ function Navbar() {
           <ul
             ref={menuRef}
             className="menulinks flex flex-col items-center bg-blue-800 rounded-2xl p-4 text-white w-48"
+            onClick={()=>{
+              setIsMenuOpen(!isMenuOpen) ;
+            }}
             >
             <li className="py-2">
               <a href="#about" className="text-lg">
