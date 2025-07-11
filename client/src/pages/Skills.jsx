@@ -1,5 +1,4 @@
 
-import React from "react";
 import Nodejs from "../assets/images/logos/nodeJs.png";
 import JavaScript from "../assets/images/logos/javascript.png";
 import HtmlCssJs from "../assets/images/logos/htmlCssJs.png";
@@ -11,16 +10,61 @@ import ReactNative from "../assets/images/logos/reactNative.png";
 import AndroidStudio from "../assets/images/logos/AndroidStudio.png";
 import java from "../assets/images/logos/java.svg";
 
+import React, { useEffect, useRef } from "react";
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
+
+
 function Skill() {
+    const skillRef = useRef(null);
+    const porRef = useRef(null);
+
+    useEffect(()=>{
+      const elements = skillRef.current.querySelectorAll("li");
+      const por = porRef.current.querySelectorAll("li");
+       gsap.set(por, { x: 150, opacity: 0 }); // Initial state
+       gsap.to(por, {
+      x: 0,
+      opacity: 1,
+      duration: 1,
+      stagger: 0.5,
+      delay:0.2,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: porRef.current,
+        start: "top 90%",
+       toggleActions: "play none play reset",
+      },
+    });
+      gsap.set(elements, { x: -150, opacity: 0 }); // Initial state
+      gsap.to(elements, {
+      x: 0,
+      opacity: 1,
+      duration: 1,
+      stagger: 0.3,
+      ease: "power2.out",
+      scrollTrigger: {
+        trigger: skillRef.current,
+        start: "top 95%",
+       toggleActions: "play none play reset",
+
+      },
+    });
+
+    },[])
+  
   return (
     <section id="skills" className="bg-[#0b1338] py-16 px-6 md:px-20">
       <div className="flex flex-col md:flex-row justify-center gap-10">
         {/* Skills Section */}
         <div className="w-full">
-          <h1 className="text-center text-4xl md:text-5xl font-semibold text-white mb-8 hover:translate-y-1 transition duration-500">
+          <h1 className="text-center text-4xl md:text-5xl font-semibold text-white mb-8 hover:translate-y-1 transition duration-500 cursor-pointer">
             Skills
           </h1>
-          <ul className="flex flex-wrap justify-center gap-12">
+          <ul ref={skillRef} className="flex flex-wrap justify-center gap-12">
             {[
               { img: java, text: "Java" },
               { img: Cpp, text: "C/C++" },
@@ -47,10 +91,10 @@ function Skill() {
 
         {/* Position of Responsibilities Section */}
         <div className="w-full">
-          <h1 className="text-center text-3xl md:text-4xl font-semibold text-white mb-8 hover:translate-y-1 transition duration-500">
+          <h1 className="cursor-pointer text-center text-3xl md:text-4xl font-semibold text-white mb-8 hover:translate-y-1 transition duration-500">
             Position of Responsibilities
           </h1>
-          <ul>
+          <ul ref={porRef}>
             {[
               {
                 title: "Web Development Head | Advitiya'25",
@@ -68,9 +112,11 @@ function Skill() {
                   "Successfully conducted Skymaster, a drone racing event, as part of Advitiya'24, the technical fest of IIT Ropar.",
               },
             ].map((role, index) => (
-              <li key={index} className="bg-[#0c0d22] rounded-3xl p-6 mb-6 hover:scale-105 hover:bg-gradient-to-r from-[#2c2c2cb0] to-[#0c0d22] transition duration-700">
+              <li>
+              <div key={index} className=" bg-[#0c0d22] rounded-3xl p-6 mb-6 hover:scale-105 hover:bg-gradient-to-r from-[#2c2c2cb0] to-[#0c0d22] transition duration-300">
                 <h3 className="text-center text-xl text-white mb-2">{role.title}</h3>
                 <p className="text-white text-lg text-center md:text-left">{role.description}</p>
+              </div>
               </li>
             ))}
           </ul>

@@ -1,8 +1,32 @@
-import React from "react";
+import React, { useState, useRef } from "react";
+import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+gsap.registerPlugin(useGSAP); 
 import Typewriter from "typewriter-effect";
 import NishantImg from "../assets/images/imgs/Nishant.jpg";
 
 function Home() {
+useGSAP(() => {
+  gsap.from('.paragraph', { 
+    y: -60,
+    duration: 1,
+    delay: 1,
+    stagger: 0.5,
+    opacity: 0
+  });  
+
+ gsap.from('.buttonss a', {
+   opacity: 0,       
+  duration: 1,
+  delay: 1,
+  stagger: 0.5,    // one by one, every 0.5s
+  ease: "power2.out"
+});
+
+}, []);
+
+
+
   return (
     <>
       {/* Font Import */}
@@ -32,7 +56,7 @@ function Home() {
                 />
               </span>
             </h1>
-            <p className="text-lg sm:text-xl leading-relaxed">
+            <p className="text-lg sm:text-xl leading-relaxed paragraph">
               I am a full-stack web developer.
               <br />
               I develop web apps using the MERN stack.
@@ -40,10 +64,10 @@ function Home() {
               I build mobile apps with React Native.
             </p>
 
-            <div className="flex flex-col sm:flex-row gap-4 items-center sm:items-start justify-center md:justify-start mt-6">
+            <div className="buttonss flex flex-col sm:flex-row gap-4 items-center sm:items-start justify-center md:justify-start mt-6">
               <a
                 href="#contact"
-                className="bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
+                className="active:scale-95 bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
               >
                 Contact Me
               </a>
@@ -51,7 +75,7 @@ function Home() {
                 href="https://drive.google.com/file/d/1y6P1dKq60hz5u9FAEHrfCFO4pyb0Zg6Z/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
+                className="active:scale-95 bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
               >
                 Resume
               </a>

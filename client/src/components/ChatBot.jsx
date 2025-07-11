@@ -4,6 +4,7 @@ import Linkk from "../utils/Linkk";
 import img from "../assets/imgChatbot2.png";
 import crossImg from "../assets/crossImg.png";
 import sendIcon from "../assets/sendIcon.png";
+import { motion, AnimatePresence } from "framer-motion";
 
 import { Link } from "react-router-dom";
 
@@ -36,8 +37,16 @@ const Chatbot = () => {
   return (
     <div className="fixed bottom-10 right-10 z-50">
       <div className="flex flex-col items-end">
-        {chatbotOpened && (
-          <div className="bg-white w-[400px] h-[500px] rounded-2xl mb-5">
+    <AnimatePresence>
+  {chatbotOpened && (
+    <motion.div
+      initial={{ opacity: 0, scale: 0.8, y: 50 }}
+      animate={{ opacity: 1, scale: 1, y: 0 }}
+      exit={{ opacity: 0, scale: 0.8, y: 50 }}
+      transition={{ duration: 0.2, ease: "easeOut" }}
+      className="bg-white w-[400px] h-[500px] rounded-2xl mb-5 shadow-lg"
+    >
+
             <div className="flex bg-[#624fb2] text-white text-xl p-3 rounded-tl-2xl rounded-tr-2xl justify-between items-center">
               <div className="">
                 ChatBot
@@ -91,20 +100,35 @@ const Chatbot = () => {
                 <img src={sendIcon} alt="..."/> 
               </button>
             </div>
-          </div>
-        )}
+              </motion.div>
+  )}
+</AnimatePresence>
+
+
         <div
-          className="bg-white w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer"
+          className="animate-float bg-white w-[60px] h-[60px] rounded-full flex justify-center items-center cursor-pointer"
           onClick={() => setChabotOpened(!chatbotOpened)}
         >
           {!chatbotOpened&&
-          <img src={img} alt="Chatbot" className="w-16 h-16 rounded-full" />
+          <img src={img} alt="Chatbot" className=" w-16 h-16 rounded-full" />
            }
            {chatbotOpened&&
           <img src={crossImg} alt="Chatbot" className=" p-4 w-16 h-16 rounded-full" />
            }
         </div>
       </div>
+       <style>
+        {`
+          @keyframes float {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-10px); }
+          }
+
+          .animate-float {
+            animation: float 3s ease-in-out infinite;
+          }
+        `}
+      </style>
     </div>
   );
 };
