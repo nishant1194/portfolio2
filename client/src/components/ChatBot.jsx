@@ -91,6 +91,12 @@ const Chatbot = () => {
                 placeholder="Ask me your Query"
                 value={query}
                 onChange={(e) => setQuery(e.target.value)}
+                onKeyDown={(e) => {
+                if (e.key === "Enter" && query.trim() !== "") {
+                  send();
+                }
+                }}
+
               />
               <button
                 className={`bg-[#624fb2] text-white rounded-full w-10 h-10 p-1 flex justify-center items-center cursor-pointer`}
