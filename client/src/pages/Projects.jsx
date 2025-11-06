@@ -33,6 +33,15 @@ gsap.set(elements, { x: -window.innerWidth, opacity: 0 });
   }, []);
 
   const [projects, setProjects] = useState([
+     {
+      tittle: "LeetCode Clone with AI",
+      description:
+        "Developed a full-stack coding platform with user authentication, problem-solving interface, and real-time code execution using MERN stack with integrated chatbot.",
+      skills: ["NextJS", "GeminiAPI", "TailwindCSS"],
+      github: "https://github.com/nishant1194/CodePrep",
+      liveLink: "https://code-prep-nine.vercel.app/",
+      image: neetcodeImg,
+    },
     {
       tittle: "Short.ly (Url utility)",
       description:
@@ -68,15 +77,6 @@ gsap.set(elements, { x: -window.innerWidth, opacity: 0 });
       github: "https://github.com/nishant1194/blogApp",
       liveLink: "https://blog-app-neew.vercel.app/",
       image: blogImg,
-    },
-    {
-      tittle: "LeetCode Clone with AI",
-      description:
-        "Developed a full-stack coding platform with user authentication, problem-solving interface, and real-time code execution using MERN stack with integrated chatbot.",
-      skills: ["MERN", "GeminiAPI", "TailwindCSS"],
-      github: "https://github.com/nishant1194/sihs",
-      liveLink: "https://neetcode-teal.vercel.app/",
-      image: neetcodeImg,
     },
     {
       tittle: "WeatherWave",
