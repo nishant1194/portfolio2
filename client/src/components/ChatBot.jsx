@@ -12,13 +12,14 @@ const Chatbot = () => {
   const [query, setQuery] = useState("");
   const [chats, setChats] = useState([]);
   const [chatbotOpened, setChabotOpened] = useState(false);
-
+  const [respLoading, setRespLoading] = useState(false);
   const send = async () => {
     setChats((prevChats) => [
       ...prevChats,
       { by: "me", message: query, confidence: "-1" },
     ]);
     setQuery("");
+    setRespLoading(true);
     try {
       const resp = await axios.post(Linkk + "/chat-bot/chat", { query });
       setChats((prevChats) => [
@@ -32,6 +33,7 @@ const Chatbot = () => {
     } catch (error) {
       console.log(error);
     }
+    setRespLoading(false);
   };
 
   return (
@@ -101,7 +103,7 @@ const Chatbot = () => {
               <button
                 className={`bg-[#624fb2] text-white rounded-full w-10 h-10 p-1 flex justify-center items-center cursor-pointer`}
                 onClick={send}
-                disabled={query === ""}
+                disabled={respLoading};
               >
                 <img src={sendIcon} alt="..."/> 
               </button>
