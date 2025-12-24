@@ -72,7 +72,7 @@ useGSAP(() => {
                 Contact Me
               </a>
               <a
-                href="https://drive.google.com/file/d/1y6P1dKq60hz5u9FAEHrfCFO4pyb0Zg6Z/view?usp=sharing"
+                href="https://drive.google.com/file/d/1uUMiKnB3QqR0WzzfKNokpOkwaDMteSaY/view?usp=sharing"
                 target="_blank"
                 rel="noopener noreferrer"
                 className="active:scale-95 bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
