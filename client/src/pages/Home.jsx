@@ -1,46 +1,42 @@
-import React, { useState, useRef } from "react";
-import gsap from 'gsap';
-import { useGSAP } from '@gsap/react';
-gsap.registerPlugin(useGSAP); 
+import React from "react";
+import gsap from "gsap";
+import { useGSAP } from "@gsap/react";
 import Typewriter from "typewriter-effect";
+
 import NishantImg from "../assets/images/imgs/Nishant.jpg";
 
+gsap.registerPlugin(useGSAP);
+
 function Home() {
-useGSAP(() => {
-  gsap.from('.paragraph', { 
-    y: -60,
-    duration: 1,
-    delay: 1,
-    stagger: 0.5,
-    opacity: 0
-  });  
+  useGSAP(() => {
+    gsap.from(".paragraph", {
+      y: -60,
+      duration: 1,
+      delay: 1,
+      stagger: 0.5,
+      opacity: 0,
+    });
 
- gsap.from('.buttonss a', {
-   opacity: 0,       
-  duration: 1,
-  delay: 1,
-  stagger: 0.5,    // one by one, every 0.5s
-  ease: "power2.out"
-});
-
-}, []);
-
-
+    gsap.from(".buttonss a", {
+      opacity: 0,
+      duration: 1,
+      delay: 1,
+      stagger: 0.5,
+      ease: "power2.out",
+    });
+  }, []);
 
   return (
     <>
-      {/* Font Import */}
-      <style>
-        {`@import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;500;700&display=swap');`}
-      </style>
-
       <div
         className="bg-[#0b1338] text-white min-h-screen flex flex-col items-center justify-center px-6"
         style={{ fontFamily: "'Roboto', sans-serif" }}
       >
-        <div className="w-full max-w-7xl flex flex-col-reverse md:flex-row items-center justify-between ">
+        <div className="w-full max-w-7xl flex flex-col-reverse md:flex-row items-center justify-between">
+          
           {/* Left Section */}
-          <div className=" md:pl-16 lg:30 w-full md:w-1/2 space-y-6 text-center md:text-left">
+          <div className="md:pl-16 lg:pl-30 w-full md:w-1/2 space-y-6 text-center md:text-left">
+            
             <h1 className="text-4xl sm:text-5xl font-bold leading-tight">
               Hi, I'm{" "}
               <span className="text-[#02c3fc]">
@@ -56,29 +52,36 @@ useGSAP(() => {
                 />
               </span>
             </h1>
+
+            <h2 className="text-2xl sm:text-3xl font-semibold text-[#02c3fc] paragraph">
+              Full Stack AI Engineer
+            </h2>
+
             <p className="text-lg sm:text-xl leading-relaxed paragraph">
-              I am a full-stack web developer.
+              I build AI-powered applications, intelligent backend systems,
+              and scalable web experiences.
               <br />
-              I develop web apps using the MERN stack.
               <br />
-              I build mobile apps with React Native.
+              Currently working with Python, TypeScript, React, Next.js,
+              Node.js, NLP, and AI-driven workflows.
             </p>
 
             <div className="buttonss flex flex-col sm:flex-row gap-4 items-center sm:items-start justify-center md:justify-start mt-6">
+              
               <a
-                href="#contact"
+                href="#experience"
                 className="active:scale-95 bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
               >
-                Contact Me
+                View Experience
               </a>
+
               <a
-                href="https://drive.google.com/file/d/1uUMiKnB3QqR0WzzfKNokpOkwaDMteSaY/view?usp=sharing"
-                target="_blank"
-                rel="noopener noreferrer"
+                href="#projects"
                 className="active:scale-95 bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
               >
-                Resume
+                View Projects
               </a>
+
             </div>
           </div>
 
@@ -93,7 +96,6 @@ useGSAP(() => {
         </div>
       </div>
 
-      {/* Keyframe animation */}
       <style>
         {`
           @keyframes float {

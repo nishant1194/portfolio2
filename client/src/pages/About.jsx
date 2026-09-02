@@ -1,5 +1,7 @@
 import abc from "../assets/images/imgs/img.png";
+
 import React, { useEffect, useRef } from "react";
+
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -9,72 +11,112 @@ function About() {
   const listRef = useRef(null);
 
   useEffect(() => {
-    const elements = listRef.current.querySelectorAll("li");
+    const elements =
+      listRef.current.querySelectorAll(".about-card");
 
-    gsap.set(elements, { x: -150, opacity: 0 }); // Initial state
+    gsap.set(elements, {
+      x: -150,
+      opacity: 0,
+    });
 
     gsap.to(elements, {
       x: 0,
       opacity: 1,
-      duration: 1,
-      stagger: 0.3,
+      duration: 0.9,
+      stagger: 0.25,
       ease: "power2.out",
+
       scrollTrigger: {
         trigger: listRef.current,
-        start: "top 95%",
-       toggleActions: "play none play reset",
-        //  markers: true,
+        start: "top 85%",
+        toggleActions: "play none play reset",
       },
     });
   }, []);
 
-  return (
-    <section id="about" className="bg-[#0b1338] py-16 px-6 md:px-20">
-      <h2 className="text-4xl md:text-5xl text-white font-semibold mb-12 hover:-translate-y-1 transition duration-75 md:text-left text-center">
-        ABOUT ME
-      </h2>
-      <div className="flex flex-col md:flex-row items-center justify-center gap-10">
-        <img
-          src={abc}
-          alt="Profile"
-          className="rounded-full w-3/5 md:w-2/5 lg:w-1/3 hidden sm:block"
-        />
-        <ul ref={listRef} className="w-full space-y-6 lists">
-          <li>
-          <div className="bg-[#0c0d22] rounded-3xl p-6 hover:scale-105 hover:bg-gradient-to-r from-[#2c2c2cb0] to-[#0c0d22] transition duration-300">
-            <h3 className="text-white text-center text-2xl font-medium mb-2">
-              Web Developer
-            </h3>
-            <p className="text-white text-lg text-center md:text-left leading-7">
-              As a MERN developer, I build modern and responsive web
-              applications using MongoDB, Express.js, React, and Node.js.
-            </p>
-          </div>
-          </li>
-          <li>
-          <div className="bg-[#0c0d22] rounded-3xl p-6 hover:scale-105 hover:bg-gradient-to-r from-[#2c2c2cb0] to-[#0c0d22] transition duration-300">
-            <h3 className="text-white text-center text-2xl font-medium mb-2">
-              Mobile Developer
-            </h3>
-            <p className="text-white text-lg text-center md:text-left leading-7">
-              I'm a React Native developer who loves crafting mobile apps with
-              React and JavaScript. I focus on making user-friendly designs.
-            </p>
-          </div>
-          </li>
-          <li>
+  const aboutItems = [
+    {
+      title: "IIT Ropar",
+      icon: "🏛️",
 
-          <div className="bg-[#0c0d22] rounded-3xl p-6 hover:scale-105 hover:bg-gradient-to-r from-[#2c2c2cb0] to-[#0c0d22] transition duration-300">
-            <h3 className="text-white text-center text-2xl font-medium mb-2">
-              Academics
-            </h3>
-            <p className="text-white text-lg text-center md:text-left leading-7">
-              Currently pursuing my B.Tech in one of the prestigious colleges of
-              India, Indian Institute of Technology, Ropar.
-            </p>
+      description:
+        "I graduated with a B.Tech in Electrical Engineering from IIT Ropar. My journey in technology has taken me beyond my core discipline into software engineering, artificial intelligence, and building real-world products.",
+    },
+
+    {
+      title: "AI & Intelligent Systems",
+      icon: "🤖",
+
+      description:
+        "I work on building AI-powered applications and intelligent systems, with experience in AI agents, LangGraph, LLM-based workflows, machine learning, and data-driven applications.",
+    },
+
+    {
+      title: "Full-Stack Development",
+      icon: "💻",
+
+      description:
+        "I'm a full-stack developer with experience building scalable web applications and cross-platform products. I work across modern frontend and backend technologies, databases, APIs, and mobile development.",
+    },
+  ];
+
+  return (
+    <section
+      id="about"
+      className="bg-[#0b1338] py-16 px-6 md:px-20"
+    >
+      <div className="max-w-7xl mx-auto">
+
+        {/* Heading */}
+
+        <h2 className="text-4xl md:text-5xl text-white font-semibold mb-12 text-center md:text-left">
+          ABOUT ME
+        </h2>
+
+        <div className="flex flex-col md:flex-row items-center justify-center gap-12">
+
+          {/* Profile Image */}
+
+          <div className="w-full md:w-2/5 flex justify-center">
+            <img
+              src={abc}
+              alt="Nishant"
+              className="rounded-full w-3/5 md:w-4/5 max-w-sm hover:scale-105 transition duration-300"
+            />
           </div>
-          </li>
-        </ul>
+
+          {/* About Cards */}
+
+          <div
+            ref={listRef}
+            className="w-full md:w-3/5 space-y-6"
+          >
+            {aboutItems.map((item, index) => (
+              <div
+                key={index}
+                className="about-card bg-[#0c0d22] rounded-3xl p-6 hover:scale-[1.03] hover:bg-gradient-to-r hover:from-[#2c2c2cb0] hover:to-[#0c0d22] transition duration-300"
+              >
+                <div className="flex items-center gap-4 mb-3">
+
+                  <span className="text-3xl">
+                    {item.icon}
+                  </span>
+
+                  <h3 className="text-white text-2xl font-semibold">
+                    {item.title}
+                  </h3>
+
+                </div>
+
+                <p className="text-gray-200 text-base md:text-lg leading-7">
+                  {item.description}
+                </p>
+
+              </div>
+            ))}
+          </div>
+
+        </div>
       </div>
     </section>
   );
