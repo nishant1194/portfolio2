@@ -11,10 +11,7 @@ import Experience from "./pages/Experience";
 import Skill from "./pages/Skills";
 import Projects from "./pages/Projects";
 
-import Chatbot from "./components/ChatBot";
-import AllFaqs from "./components/AllFaqs";
-import CreateFAQ from "./components/CreateFAQ";
-
+import WhatsAppButton from "./components/WhatsAppButton";
 function Mainpage() {
   return (
     <>
@@ -25,6 +22,8 @@ function Mainpage() {
       <Skill />
       <Projects />
       <Footer />
+      <WhatsAppButton />
+
     </>
   );
 }
@@ -33,7 +32,7 @@ function MainpageWithChatBot() {
   return (
     <>
       <Mainpage />
-      <Chatbot />
+      {/* <Chatbot /> */}
     </>
   );
 }
@@ -44,14 +43,14 @@ function App() {
       path: "/",
       element: <MainpageWithChatBot />,
     },
-    {
-      path: "/faqs",
-      element: <AllFaqs />,
-    },
-    {
-      path: "/create-faqs",
-      element: <CreateFAQ />,
-    },
+    // {
+    //   path: "/faqs",
+    //   element: <AllFaqs />,
+    // },
+    // {
+    //   path: "/create-faqs",
+    //   element: <CreateFAQ />,
+    // },
   ]);
 
   return <RouterProvider router={router} />;

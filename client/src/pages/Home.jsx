@@ -76,10 +76,10 @@ function Home() {
               </a>
 
               <a
-                href="#projects"
+                href="https://drive.google.com/file/d/1xWhWMvzTEm2zGlPj5K9rE9UceEaqGq5z/view?usp=sharing"
                 className="active:scale-95 bg-gradient-to-r from-[#576cbc] to-[#357fee] text-white px-6 py-3 rounded-full text-lg font-semibold shadow-md hover:scale-105 transition-transform"
               >
-                View Projects
+                View Resume
               </a>
 
             </div>
