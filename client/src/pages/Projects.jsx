@@ -35,9 +35,12 @@ function Projects() {
     });
   }, []);
 
-  const [projects, setProjects] = useState([
+  const projects = [
     {
-      tittle: "Short.ly (Url utility)",
+      title: "CodePrep",
+
+      subtitle: "AI-Powered Coding Platform",
+
       description:
         "Developed a full-stack coding platform inspired by LeetCode with secure authentication, problem management, advanced search and filtering, multi-language code execution, and an AI-powered problem assistant.",
 
@@ -47,9 +50,9 @@ function Projects() {
         "JDoodle API",
       ],
 
-      github: "https://github.com/nishant1194/CodePrep",
+      github: "https://github.com/nishant1194/sihs",
 
-      liveLink: "https://code-prep-nine.vercel.app/",
+      liveLink: "https://neetcode-teal.vercel.app/",
 
       image: neetcodeImg,
     },
@@ -84,40 +87,22 @@ function Projects() {
       subtitle: "Machine Learning Project",
 
       description:
-        "Engineered a comprehensive website for the EE-RSF Society at our college. I have implemented dynamic features, organized content on websites.",
-      skills: ["React", "Bootstrap", "JS"],
-      github: "https://github.com/nishant1194/IIT_",
-      liveLink: "https://iit-rsf.vercel.app",
-      image: rsfImg,
+        "Developed machine learning models using Decision Trees and Random Forests to predict crime types using temporal, spatial, and contextual features. Built a police deployment recommendation component to support efficient resource allocation.",
+
+      skills: [
+        "Python",
+        "Pandas",
+        "NumPy",
+        "Scikit-learn",
+      ],
+
+      github: "#",
+
+      liveLink: null,
+
+      image: null,
     },
-    {
-      tittle: "BlogApp",
-      description:
-        "Created a full-stack blog application using the MERN stack with JWT-based authentication enables admins to manage blogs, comments, and engagement.",
-      skills: ["MERN", "Material UI", "JS"],
-      github: "https://github.com/nishant1194/blogApp",
-      liveLink: "https://blog-app-neew.vercel.app/",
-      image: blogImg,
-    },
-    {
-      tittle: "LeetCode Clone with AI",
-      description:
-        "Developed a full-stack coding platform with user authentication, problem-solving interface, and real-time code execution using MERN stack with integrated chatbot.",
-      skills: ["MERN", "GeminiAPI", "TailwindCSS"],
-      github: "https://github.com/nishant1194/sihs",
-      liveLink: "https://neetcode-teal.vercel.app/",
-      image: neetcodeImg,
-    },
-    {
-      tittle: "WeatherWave",
-      description:
-        "Designed and developed a cutting-edge weather tracking app, delivering real-time forecasts and intuitive user interfaces for enhanced weather awareness.",
-      skills: ["React", "Tailwind", "JavaScript"],
-      github: "https://github.com/nishant1194/weather-wave",
-      liveLink: "https://weather-wave-project.vercel.app",
-      image: weatherWaveImg,
-    },
-  ] );
+  ];
 
   return (
     <section
